@@ -1,9 +1,8 @@
-Intex Syntax
-
-instr   dest,source
+#
 
 
-
+## Intex Syntax
+instruction   dest,source
 
 ## Compile
 nasm -f elf64 -o file.o file.s
@@ -20,3 +19,33 @@ run
 focus asm
 si (to move to the next line in code)
 info register
+
+## Registers
+```text
+       +------------------------+
+       |          CPU           |
+       |  +------------------+  |
+       |  |    Registers     |  |
+       |  +------------------+  |
+       +-----------+------------+
+                   |
+                   | Bus (communication channel)
+                   |
+       +-----------v------------+
+       |          RAM           |
+       |      Main Memory       |
+       +------------------------+
+```
+
+### RAX
+
+rax -> for system calls
+rax 0 = read
+rax 1 = write
+rax 60 = exit
+
+### XOR
+
+xor -> or
+any number comparing with itself is 0
+xor rdi, rdi = 0
