@@ -4,6 +4,17 @@
 ## Intex Syntax
 instruction   dest,source
 
+example:
+```
+_start:
+       ...
+function_name:
+       ...
+.local_label:
+       ...
+```
+local_label belongs to its function
+
 ## Compile
 nasm -f elf64 -o file.o file.s
 ld -o program file.o
@@ -49,3 +60,8 @@ rax 60 = exit
 xor -> or
 any number comparing with itself is 0
 xor rdi, rdi = 0
+
+### RSI, RDI
+
+rsi -> source index
+rdi -> destination index
