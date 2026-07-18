@@ -9,7 +9,6 @@
 
 void	test_strlen( int ac, char** av ) {
 
-	(void)av;
 	if ( ac != 2 ) {
 		write( STDERR_FILENO, "./program ft_strlen string\n", strlen( "./program ft_strlen string\n" ) );
 		exit( EXIT_FAILURE );
@@ -20,6 +19,16 @@ void	test_strlen( int ac, char** av ) {
 
 }
 
+void	test_strcpy( int ac, char** av ) {
+
+	if ( ac != 3 ) {
+		write( STDERR_FILENO, "./program ft_strcpy dest source\n", strlen( "./program ft_strcpy dest source\n" ) );
+		exit( EXIT_FAILURE );
+	}
+	char* dest = strcpy( av[2], av[3] );
+	printf( "Source after real strcpy: [%s], dest: [%s]", dest, av[3]);
+}
+
 int	main( int ac, char** av ) {
 
 	if ( ac < 3 ) {
@@ -28,5 +37,6 @@ int	main( int ac, char** av ) {
 	}
 	if ( strcmp( av[1], "ft_strlen" ) == 0 )
 		test_strlen( ac-1, av+1 );
-
+	else if ( strcmp( av[1], "ft_strcpy" ) == 0 )
+		test_strcpy( ac-1, av+1 );
 }

@@ -101,6 +101,27 @@ xor rdi, rdi = 0
 rsi -> source index
 rdi -> destination index
 
+### Most registers also have smaller “views” (sub-registers) used for 32-bit, 16-bit, or 8-bit operations.
+
+```text
++--------+--------+--------+--------+--------+--------+--------+--------+
+|        |        |        |        |        |        |   AH   |   AL   |
++--------+--------+--------+--------+--------+--------+--------+--------+
+                                                                  ↑
+                                                           Least significant byte (LSB)
+```														   
+RAX – 64-bit register
+EAX – lower 32 bits of RAX
+AX – lower 16 bits of RAX
+AH – high 8 bits of AX (on the left)
+AL – low 8 bits of AX (on the right)
+
+### functions
+
+test -> bitwise AND
+inc rsi -> move pointer in string so the first pointer is lost 
+
+
 ## Links
 [x64 Cheat Sheet](https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf)
 [Call Table for x86 64](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/)
@@ -108,5 +129,6 @@ rdi -> destination index
 [Guide strlen in assembly](https://dev.to/trish_07/recreating-strlen-and-strcmp-in-assembly-a-step-by-step-guide-1jjn)
 [System V Application Binary Interface](https://refspecs.linuxfoundation.org/elf/x86_64-abi-0.98.pdf)
 [Jcc types](https://www.felixcloutier.com/x86/jcc)
+[x86-64 Assembly Guide](https://mars-research.github.io/cs5460/2026/x86-asm-nasm/)
 
 [colors code](https://gist.github.com/JBlond/2fea43a3049b38287e5e9cefc87b2124)
