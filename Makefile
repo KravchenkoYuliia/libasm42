@@ -31,8 +31,8 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
-	nasm $(AFLAGS) $@ $< $(DEBUG_FLAGS)
-#nasm $(AFLAGS) $@ $<
+#nasm $(AFLAGS) $@ $< $(DEBUG_FLAGS)
+	nasm $(AFLAGS) $@ $<
 
 clean:
 	rm -rf $(OBJ_DIR)

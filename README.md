@@ -100,3 +100,13 @@ xor rdi, rdi = 0
 
 rsi -> source index
 rdi -> destination index
+
+## Links
+[x64 Cheat Sheet](https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf)
+[Call Table for x86 64](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/)
+[CPU Registers x86-64](https://wiki.osdev.org/CPU_Registers_x86-64)
+[Guide strlen in assembly](https://dev.to/trish_07/recreating-strlen-and-strcmp-in-assembly-a-step-by-step-guide-1jjn)
+[System V Application Binary Interface](https://refspecs.linuxfoundation.org/elf/x86_64-abi-0.98.pdf)
+[Jcc types](https://www.felixcloutier.com/x86/jcc)
+
+[colors code](https://gist.github.com/JBlond/2fea43a3049b38287e5e9cefc87b2124)
