@@ -7,23 +7,25 @@ PURPLE = \033[1;95m
 RESET = \033[0m
 
 SRC_DIR = sources
-FILES = ft_strlen.s
-
-SRC = $(addprefix $(SRC_DIR)/, $(FILES))
-INC = includes/
+INC_DIR = includes
 OBJ_DIR = objects
 
-OBJECTS = $(addprefix $(OBJ_DIR)/, $(FILES:.s=.o))
+FILES = ft_strlen.s ft_strcpy.s
+TEST_FILE = main.c
+
+SRC = $(addprefix $(SRC_DIR)/, $(FILES))
+OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.s=.o))
+
 AFLAGS = -f elf64 -o
 CFLAGS = -Wall -Werror -Wextra
 DEBUG_FLAGS = -g -F dwarf
 
-$(LIBRARY): $(OBJ_DIR) $(OBJECTS)
-	ar rcs $(LIBRARY) $(OBJECTS)
+$(LIBRARY): $(OBJ_DIR) $(OBJ)
+	ar rcs $(LIBRARY) $(OBJ)
 	@printf "$(PURPLE)-----------------Created an Assembly library------------------$(RESET)\n"
 	
-$(PROGRAM): $(LIBRARY)
-	cc $(CFLAGS) -o program main.c $(LIBRARY)
+$(PROGRAM): $(LIBRARY) $(TEST_FILE)
+	cc $(CFLAGS) -o program $(TEST_FILE) $(LIBRARY)
 	@printf "$(PURPLE)----------Compiled main.c and linked it with library----------$(RESET)\n"
 
 
