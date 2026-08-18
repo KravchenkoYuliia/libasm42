@@ -17,6 +17,6 @@ ft_strlen:
 	mov rax, rcx
 	ret
 
-.rdi_is_null
+.rdi_is_null:
 	xor rax, rax
 	ret

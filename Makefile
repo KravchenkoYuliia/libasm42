@@ -16,7 +16,7 @@ TEST_FILE = main.c
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.s=.o))
 
-AFLAGS = -f elf64 -o
+AFLAGS = -f elf64 -Wall -Werror -o
 CFLAGS = -Wall -Werror -Wextra
 DEBUG_FLAGS = -g -F dwarf
 
