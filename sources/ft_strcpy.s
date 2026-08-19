@@ -12,12 +12,14 @@ ft_strcpy:
 	mov rax, rdi
 
 .loop:
-	mov al, [rsi]
-	jz .done
-	
-	mov [rdi], al
-	inc rdi
+	mov dl, BYTE [rsi]	; dl is the least significant 8 bits of ax
+	mov [rdi], dl
+
+	inc rdi 	; move pointer to the next elem
 	inc rsi
+
+	test dl, dl
+	jz .done
 
 	jmp .loop
 

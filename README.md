@@ -27,6 +27,7 @@ gdb -tui ./program
 layout asm
 break _start
 run
+set args <function name> <args>
 focus asm
 si (to move to the next line in code)
 info register
@@ -115,6 +116,9 @@ EAX – lower 32 bits of RAX
 AX – lower 16 bits of RAX
 AH – high 8 bits of AX (on the left)
 AL – low 8 bits of AX (on the right)
+
+same for every register:
+RDX -> EDX - > DX -> DH + DL
 
 ### functions
 

@@ -4,29 +4,45 @@
 #include <unistd.h>
 #include "includes/libasm.h"
 
+#define UNDERLINE "\033[4m"
 #define GREEN "\033[1;92m"
+#define PURPLE "\033[1;95m"
+#define CYAN "\033[1;96m"
 #define RESET "\033[0m"
+
+void	fatal_error( char* msg ) {
+	
+	write( STDERR_FILENO, msg, strlen( msg ) );
+	exit( EXIT_FAILURE );
+
+}
 
 void	test_strlen( int ac, char** av ) {
 
-	if ( ac != 2 ) {
-		write( STDERR_FILENO, "./program ft_strlen string\n", strlen( "./program ft_strlen string\n" ) );
-		exit( EXIT_FAILURE );
-	}
-	printf( GREEN "Calling ft_strlen\n" RESET );
-	printf( "Real strlen of [%s] is [%zu]\n", av[1], strlen( av[1] ) );
-	printf( "ft_strlen of [%s] is [%zu]\n", av[1], ft_strlen( av[1] ) );
+	if ( ac != 2 )
+		fatal_error( "./program ft_strlen string\n" );
+	if ( av == NULL || av[1] == NULL )
+		fatal_error( "string is NULL" );
+	printf( UNDERLINE GREEN "Calling ft_strlen\n" RESET );
+	printf( PURPLE "Real strlen" RESET " of [%s] is" PURPLE " [%zu]\n" RESET, av[1], strlen( av[1] ) );
+	printf( CYAN "My ft_strlen" RESET " of [%s] is" CYAN " [%zu]\n" RESET, av[1], ft_strlen( av[1] ) );
 
 }
 
 void	test_strcpy( int ac, char** av ) {
 
-	if ( ac != 3 ) {
-		write( STDERR_FILENO, "./program ft_strcpy dest source\n", strlen( "./program ft_strcpy dest source\n" ) );
-		exit( EXIT_FAILURE );
-	}
-	char* dest = strcpy( av[2], av[3] );
-	printf( "Source after real strcpy: [%s], dest: [%s]", dest, av[3]);
+	if ( ac != 3 )
+		fatal_error( "./program ft_strcpy dest source\n" );
+	if ( !av || !av[1] || !av[2] )
+		fatal_error( "dest or source is NULL" );
+	if ( strlen( av[1] ) > 1000 || strlen( av[2] ) > 1000 )
+		fatal_error( "dest and source must be less that 1000 bytes\n" );
+
+	printf( UNDERLINE GREEN "Calling ft_strcpy\n" RESET );
+	printf( "dest before:" PURPLE " %s" RESET ", source before:" CYAN " %s" RESET "\n", av[1], av[2]);
+	ft_strcpy( av[1], av[2] );
+	printf( "dest after:" CYAN " %s" RESET ", source after:" CYAN " %s" RESET "\n", av[1], av[2]);
+
 }
 
 int	main( int ac, char** av ) {
@@ -35,8 +51,12 @@ int	main( int ac, char** av ) {
 		write( STDERR_FILENO, "./program FUNCTION ARGUMENT(S)\n", strlen( "./program FUNCTION ARGUMENT(S)\n" ) );
 		return 1;
 	}
+	if ( !av[1] )
+		fatal_error( "function name is NULL\n" );
+
 	if ( strcmp( av[1], "ft_strlen" ) == 0 )
 		test_strlen( ac-1, av+1 );
 	else if ( strcmp( av[1], "ft_strcpy" ) == 0 )
 		test_strcpy( ac-1, av+1 );
+
 }
