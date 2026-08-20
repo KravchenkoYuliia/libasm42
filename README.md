@@ -110,7 +110,7 @@ rdi -> destination index
 +--------+--------+--------+--------+--------+--------+--------+--------+
                                                                   ↑
                                                            Least significant byte (LSB)
-```														   
+```
 RAX – 64-bit register
 EAX – lower 32 bits of RAX
 AX – lower 16 bits of RAX
@@ -126,3 +126,7 @@ test -> bitwise AND
 inc rsi -> move pointer in string so the first pointer is lost 
 movzx -> move bytes/words to doublewords/quadwords, zero-extension
 movsx -> move and sign extend
+
+### links
+https://www.felixcloutier.com/x86/jcc
+https://www.tutorialspoint.com/assembly_programming/index.htm
