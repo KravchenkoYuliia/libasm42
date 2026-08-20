@@ -10,7 +10,7 @@ SRC_DIR = sources
 INC_DIR = includes
 OBJ_DIR = objects
 
-FILES = ft_strlen.s ft_strcpy.s
+FILES = ft_strlen.s ft_strcpy.s ft_strcmp.s
 TEST_FILE = main.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))

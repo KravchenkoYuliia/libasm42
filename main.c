@@ -10,12 +10,14 @@
 #define CYAN "\033[1;96m"
 #define RESET "\033[0m"
 
+
 void	fatal_error( char* msg ) {
 	
 	write( STDERR_FILENO, msg, strlen( msg ) );
 	exit( EXIT_FAILURE );
 
 }
+
 
 void	test_strlen( int ac, char** av ) {
 
@@ -29,14 +31,13 @@ void	test_strlen( int ac, char** av ) {
 
 }
 
+
 void	test_strcpy( int ac, char** av ) {
 
 	if ( ac != 3 )
 		fatal_error( "./program ft_strcpy dest source\n" );
 	if ( !av || !av[1] || !av[2] )
 		fatal_error( "dest or source is NULL" );
-	if ( strlen( av[1] ) > 1000 || strlen( av[2] ) > 1000 )
-		fatal_error( "dest and source must be less that 1000 bytes\n" );
 
 	printf( UNDERLINE GREEN "Calling ft_strcpy\n" RESET );
 	printf( "dest before:" PURPLE " %s" RESET ", source before:" CYAN " %s" RESET "\n", av[1], av[2]);
@@ -44,6 +45,26 @@ void	test_strcpy( int ac, char** av ) {
 	printf( "dest after:" CYAN " %s" RESET ", source after:" CYAN " %s" RESET "\n", av[1], av[2]);
 
 }
+
+
+void	test_strcmp( int ac, char** av ) {
+
+	if ( ac != 3 )
+		fatal_error( "./program ft_strcmp string1 string2\n" );
+	if ( !av || !av[1] || !av[2] )
+		fatal_error( "one or two strings are NULL" );
+
+	printf( PURPLE "Real strcmp: [%d]\n" RESET, strcmp( av[1], av[2] ) );
+	int	result_of_comparison = ft_strcmp( av[1], av[2] );
+	if ( result_of_comparison == 0 )
+		printf( "The strings are equal\n[%s]\n[%s]\n",  av[1], av[2] );
+	else if ( result_of_comparison > 0 )
+		printf( "[%s] is greater than [%s]\n", av[1], av[2] );
+	else if ( result_of_comparison < 0 )
+		printf( "[%s] is less than [%s]\n", av[1], av[2] );
+
+}
+
 
 int	main( int ac, char** av ) {
 
@@ -58,5 +79,7 @@ int	main( int ac, char** av ) {
 		test_strlen( ac-1, av+1 );
 	else if ( strcmp( av[1], "ft_strcpy" ) == 0 )
 		test_strcpy( ac-1, av+1 );
+	else if ( strcmp( av[1], "ft_strcmp" ) == 0 )
+		test_strcmp( ac-1, av+1 );
 
 }
