@@ -23,13 +23,15 @@ ft_strcmp:
 	jmp		.loop
 
 .strings_are_finished:
-	mov 	rax, 0
+	mov 	eax, 0
 	ret
 
 .first_is_above:
-	mov		rax, 1
+	sub		al, dl
+	movzx		eax, al
 	ret
 
 .first_is_below:
-	mov		rax, -1
+	sub		al, dl
+	movsx		eax, al
 	ret

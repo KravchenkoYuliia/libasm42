@@ -55,6 +55,8 @@ void	test_strcmp( int ac, char** av ) {
 		fatal_error( "one or two strings are NULL" );
 
 	printf( PURPLE "Real strcmp: [%d]\n" RESET, strcmp( av[1], av[2] ) );
+	printf( CYAN "My ft_strcmp: [%d]\n" RESET, ft_strcmp( av[1], av[2] ) );
+	
 	int	result_of_comparison = ft_strcmp( av[1], av[2] );
 	if ( result_of_comparison == 0 )
 		printf( "The strings are equal\n[%s]\n[%s]\n",  av[1], av[2] );

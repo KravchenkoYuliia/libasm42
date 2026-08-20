@@ -124,15 +124,5 @@ RDX -> EDX - > DX -> DH + DL
 
 test -> bitwise AND
 inc rsi -> move pointer in string so the first pointer is lost 
-
-
-## Links
-[x64 Cheat Sheet](https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf)
-[Call Table for x86 64](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/)
-[CPU Registers x86-64](https://wiki.osdev.org/CPU_Registers_x86-64)
-[Guide strlen in assembly](https://dev.to/trish_07/recreating-strlen-and-strcmp-in-assembly-a-step-by-step-guide-1jjn)
-[System V Application Binary Interface](https://refspecs.linuxfoundation.org/elf/x86_64-abi-0.98.pdf)
-[Jcc types](https://www.felixcloutier.com/x86/jcc)
-[x86-64 Assembly Guide](https://mars-research.github.io/cs5460/2026/x86-asm-nasm/)
-
-[colors code](https://gist.github.com/JBlond/2fea43a3049b38287e5e9cefc87b2124)
+movzx -> move bytes/words to doublewords/quadwords, zero-extension
+movsx -> move and sign extend
