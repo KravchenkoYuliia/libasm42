@@ -10,7 +10,7 @@ SRC_DIR = sources
 INC_DIR = includes
 OBJ_DIR = objects
 
-FILES = ft_strlen.s ft_strcpy.s ft_strcmp.s
+FILES = ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s
 TEST_FILE = main.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
@@ -25,7 +25,7 @@ $(LIBRARY): $(OBJ_DIR) $(OBJ)
 	@printf "$(PURPLE)-----------------Created an Assembly library------------------$(RESET)\n"
 	
 $(PROGRAM): $(LIBRARY) $(TEST_FILE)
-	cc $(CFLAGS) -o program $(TEST_FILE) $(LIBRARY)
+	gcc $(CFLAGS) -o program $(TEST_FILE) $(LIBRARY)
 	@printf "$(PURPLE)----------Compiled main.c and linked it with library----------$(RESET)\n"
 
 
