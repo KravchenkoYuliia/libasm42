@@ -1,5 +1,5 @@
 section .text
-global ft_strcmp
+global 	ft_strcmp
 
 ft_strcmp:
 
