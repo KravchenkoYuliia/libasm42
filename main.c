@@ -107,7 +107,7 @@ int		size_t_is_valid( const char *str, size_t *result )
 void	test_write( int ac, char** av ) {
 
 	if ( ac != 3 )
-		fatal_error( "./program ft_write fd text size\n" );
+		fatal_error( "./program ft_write fd text count\n" );
 	if ( !av || !av[0] || !av[1] || !av[2])
 		fatal_error( "One of the arguments is NULL\n" );
 	
@@ -135,6 +135,36 @@ void	test_write( int ac, char** av ) {
 }
 
 
+void	test_read( int ac, char** av ) {
+
+	if ( ac != 2 )
+		fatal_error( "./program ft_read fd count\n" );
+	if ( !av || !av[0] || !av[1] )
+		fatal_error( "One of the arguments is NULL\n" );
+
+	int		fd;
+	if ( !int_is_valid( av[0], &fd ) )
+		fatal_error( "fd must be an int" );
+
+	size_t	count;
+	if ( !size_t_is_valid( av[1], &count ) )
+		fatal_error( "count must be a size_t" );
+
+	char*	buffer = calloc( count + 1, 1 );
+	if ( !buffer )
+		fatal_error( "Malloc for buffer failed\n" );
+
+	//ssize_t		result_of_read = read( fd, buffer, count );
+	//printf( PURPLE "[%zd]" RESET " bytes were read by" PURPLE " real read" RESET "\nBuffer is" PURPLE " [%s]" RESET "\n\n", result_of_read, buffer );
+
+	ssize_t		result_of_read = ft_read( fd, buffer, count );
+	printf( CYAN "[%zd]" RESET " bytes were read by" CYAN " ft_read" RESET "\nBuffer is" CYAN " [%s]" RESET "\n\n", result_of_read, buffer );
+
+	free( buffer );
+
+}
+
+
 int	main( int ac, char** av ) {
 
 	if ( ac < 3 ) {
@@ -152,6 +182,8 @@ int	main( int ac, char** av ) {
 		test_strcmp( ac-2, av+2 );
 	else if ( strcmp( av[1], "ft_write" ) == 0 )
 		test_write( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_read" ) == 0 )
+		test_read( ac-2, av+2 );
 	else
 		printf( "Invalid function\n" );
 
