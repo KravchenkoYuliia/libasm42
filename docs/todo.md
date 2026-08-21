@@ -1,3 +1,3 @@
-## bug in strcpy 
 
-	if dest is empty -> source looses 1 char after coping
+## align padding on the stack -> ft_strdup
+## set errno after syscall -> ft_write, ft_read
