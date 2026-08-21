@@ -29,7 +29,8 @@ void	test_strlen( int ac, char** av ) {
 		fatal_error( "./program ft_strlen string\n" );
 	if ( av == NULL || av[0] == NULL )
 		fatal_error( "string is NULL" );
-	printf( UNDERLINE GREEN "Calling ft_strlen\n" RESET );
+
+	printf( UNDERLINE GREEN "Calling ft_strlen" RESET "\n\n" );
 	printf( PURPLE "Real strlen" RESET " of [%s] is" PURPLE " [%zu]\n" RESET, av[0], strlen( av[0] ) );
 	printf( CYAN "My ft_strlen" RESET " of [%s] is" CYAN " [%zu]\n" RESET, av[0], ft_strlen( av[0] ) );
 
@@ -43,10 +44,13 @@ void	test_strcpy( int ac, char** av ) {
 	if ( !av || !av[0] || !av[1] )
 		fatal_error( "dest or source is NULL" );
 
-	printf( UNDERLINE GREEN "Calling ft_strcpy\n" RESET );
-	printf( "dest before:" PURPLE " %s" RESET ", source before:" CYAN " %s" RESET "\n", av[0], av[1]);
-	ft_strcpy( av[0], av[1] );
-	printf( "dest after:" CYAN " %s" RESET ", source after:" CYAN " %s" RESET "\n", av[0], av[1]);
+	char*	dest = av[0];
+	char*	src = av[1];
+
+	printf( UNDERLINE GREEN "Calling ft_strcpy" RESET "\n\n" );
+	printf( "dest before:" PURPLE " %s" RESET "\n", dest );
+	ft_strcpy( dest, src );	
+	printf( "dest after:" CYAN " %s" RESET "\n", dest );
 
 }
 
@@ -58,6 +62,7 @@ void	test_strcmp( int ac, char** av ) {
 	if ( !av || !av[0] || !av[1] )
 		fatal_error( "one or two strings are NULL" );
 
+	printf( UNDERLINE GREEN "Calling ft_strcmp" RESET "\n\n" );
 	printf( PURPLE "Real strcmp: [%d]\n" RESET, strcmp( av[0], av[1] ) );
 	printf( CYAN "My ft_strcmp: [%d]\n" RESET, ft_strcmp( av[0], av[1] ) );
 	
@@ -126,6 +131,7 @@ void	test_write( int ac, char** av ) {
 		exit( EXIT_FAILURE );
 	}
 
+	printf( UNDERLINE GREEN "Calling ft_write" RESET "\n\n" );
 	ssize_t		result_of_write = ft_write( fd, buffer, count );
 	if ( result_of_write < 0 )
 		fatal_error( "Can't write in this fd, error occured\n" );
@@ -157,10 +163,31 @@ void	test_read( int ac, char** av ) {
 	//ssize_t		result_of_read = read( fd, buffer, count );
 	//printf( PURPLE "[%zd]" RESET " bytes were read by" PURPLE " real read" RESET "\nBuffer is" PURPLE " [%s]" RESET "\n\n", result_of_read, buffer );
 
+	printf( UNDERLINE GREEN "Calling ft_read" RESET "\n\n" );
 	ssize_t		result_of_read = ft_read( fd, buffer, count );
-	printf( CYAN "[%zd]" RESET " bytes were read by" CYAN " ft_read" RESET "\nBuffer is" CYAN " [%s]" RESET "\n\n", result_of_read, buffer );
+	printf( CYAN "[%zd]" RESET " bytes were read by" CYAN " ft_read" RESET "\n"\
+			"Buffer is" CYAN " [%s]" RESET "\n", result_of_read, buffer );
 
 	free( buffer );
+
+}
+
+void	test_strdup( int ac, char** av ) {
+
+	if ( ac != 1 )
+		fatal_error( "./program ft_strdup string\n" );
+	if ( !av || !av[0] )
+		fatal_error( "String is NULL\n" );
+
+	printf( UNDERLINE GREEN "Calling ft_strdup" RESET "\n\n" );
+
+	char*	init_string = av[0];
+	char*	duplicate_string = ft_strdup( init_string );
+
+	printf( PURPLE "The initial" RESET " string is %s" PURPLE " [%p]" RESET "\n"\
+			CYAN "Duplicated" RESET " string is %s" CYAN " [%p]" RESET "\n",\
+			init_string, &init_string,\
+			duplicate_string, &duplicate_string );
 
 }
 
@@ -184,6 +211,8 @@ int	main( int ac, char** av ) {
 		test_write( ac-2, av+2 );
 	else if ( strcmp( av[1], "ft_read" ) == 0 )
 		test_read( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_strdup" ) == 0 )
+		test_strdup( ac-2, av+2 );
 	else
 		printf( "Invalid function\n" );
 

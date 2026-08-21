@@ -111,11 +111,13 @@ rdi -> destination index
                                                                   ↑
                                                            Least significant byte (LSB)
 ```
+
+![rax]( assets/rax.png ) 
 RAX – 64-bit register
 EAX – lower 32 bits of RAX
 AX – lower 16 bits of RAX
-AH – high 8 bits of AX (on the left)
-AL – low 8 bits of AX (on the right)
+AH – high 8 bits of AX ( on the left )
+AL – low 8 bits of AX  ( on the right )
 
 same for every register:
 RDX -> EDX - > DX -> DH + DL
@@ -126,6 +128,9 @@ test -> bitwise AND
 inc rsi -> move pointer in string so the first pointer is lost 
 movzx -> move bytes/words to doublewords/quadwords, zero-extension
 movsx -> move and sign extend
+
+### Stack
+"The Stack" is a frequently-used area of memory designed for functions to use as temporary storage.  This is normally where you store values while calling another function: you can't store values in the scratch registers, because the function could change them.   
 
 ### links
 https://www.felixcloutier.com/x86/jcc
