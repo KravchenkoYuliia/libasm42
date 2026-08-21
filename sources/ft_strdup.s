@@ -15,9 +15,14 @@ ft_strdup:
 	mov		rdi, rax		; rdi has length now
 	add		rdi, 1
 	call	malloc
+	test	rax, rax
+	jz		.malloc_failed
 
 	mov		rdi, rax		; pointer to the allocated memory
 	pop		rsi
 	call	ft_strcpy
 
 	ret
+
+	.malloc_failed:
+		ret
