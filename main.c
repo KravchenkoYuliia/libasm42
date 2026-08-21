@@ -187,8 +187,10 @@ void	test_strdup( int ac, char** av ) {
 
 	char*	init_string = av[0];
 	char*	duplicate_string = ft_strdup( init_string );
-	if ( !duplicate_string )
+	if ( !duplicate_string ) {
+		printf( "errno = %d\n", errno );
 		fatal_error( "Can't duplicate the string, error occured\n" );
+	}
 
 	printf( PURPLE "The initial" RESET " string is %s" PURPLE " [%p]" RESET "\n"\
 			CYAN "Duplicated" RESET " string is %s" CYAN " [%p]" RESET "\n",\
