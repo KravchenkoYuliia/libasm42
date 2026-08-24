@@ -1,8 +1,6 @@
 LIBRARY = libasm.a
 PROGRAM = program
 
-all: $(LIBRARY) $(PROGRAM)
-
 PURPLE = \033[1;95m
 RESET = \033[0m
 
@@ -11,10 +9,14 @@ INC_DIR = includes
 OBJ_DIR = objects
 
 FILES = ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s
+BONUS_FILES = ft_atoi_base_bonus.s
 TEST_FILE = main.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
+BONUS_SRC = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
+
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.s=.o))
+BONUS_OBJ = $(addprefix $(OBJ_DIR)/, $(BONUS_FILES:.s=.o))
 
 AFLAGS = -f elf64 -o
 CFLAGS = -Wall -Werror -Wextra
@@ -32,9 +34,15 @@ $(PROGRAM): $(LIBRARY) $(TEST_FILE)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
-#nasm $(AFLAGS) $@ $< $(DEBUG_FLAGS)
-	nasm $(AFLAGS) $@ $<
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.s | $(OBJ_DIR)
+	nasm $(AFLAGS) $@ $< $(DEBUG_FLAGS)
+#nasm $(AFLAGS) $@ $<
+
+all: $(LIBRARY) $(PROGRAM)
+bonus: $(BONUS_OBJ) $(LIBRARY)
+	ar rcs $(LIBRARY) $(BONUS_OBJ)
+	@printf "$(PURPLE)-----------------Added bonus files to Assembly library------------------$(RESET)\n"
+	$(MAKE) $(PROGRAM)
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -43,3 +51,5 @@ fclean: clean
 	rm $(PROGRAM)
 
 re: fclean all
+
+.PHONY: all bonus clean fclean re

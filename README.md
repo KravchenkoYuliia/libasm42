@@ -103,6 +103,11 @@ xor -> or
 any number comparing with itself is 0
 xor rdi, rdi = 0
 
+or make 1 only if bits are different:
+1 or 1 is 0
+0 or 0 is 0
+1 or 0 is 1
+
 ### RSI, RDI
 
 rsi -> source index
@@ -126,7 +131,8 @@ AH – high 8 bits of AX ( on the left )
 AL – low 8 bits of AX  ( on the right )
 
 same for every register:
-RDX -> EDX - > DX -> DH + DL
+RDX -> EDX -> DX -> DH + DL
+RSI -> ESI -> SI -> none + SIL
 
 ### functions
 
@@ -145,7 +151,9 @@ movsx -> move and sign extend
 
 
 ### links
-https://www.felixcloutier.com/x86/jcc
-https://www.tutorialspoint.com/assembly_programming/index.htm
+[Intel manual](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
+[]
+[Jump types](https://www.felixcloutier.com/x86/jcc)
+[tutorial point](https://www.tutorialspoint.com/assembly_programming/index.htm)
 [Convert signed to unsigned number 64bits](https://www.simonv.fr/TypesConvert/?integers)
-[linux syscall](https://chromium.googlesource.com/linux-syscall-support/%2B/refs/heads/master/linux_syscall_support.h?utm_source=chatgpt.com)
+[linux syscall](https://chromium.googlesource.com/linux-syscall-support/%2B/refs/heads/master/linux_syscall_support.h)

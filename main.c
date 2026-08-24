@@ -7,6 +7,7 @@
 #include <limits.h>
 #include <errno.h>
 #include "includes/libasm.h"
+#include "includes/libasm_bonus.h"
 
 #define UNDERLINE "\033[4m"
 #define GREEN "\033[1;92m"
@@ -203,6 +204,29 @@ void	test_strdup( int ac, char** av ) {
 }
 
 
+void	test_atoi_base( int ac, char** av ) {
+
+	if ( ac != 2 )
+		fatal_error( "./program ft_ string\n" );
+	if ( !av || !av[0] || !av[1] )
+		fatal_error( "String or base is NULL\n" );
+
+	char*	string = av[0];
+	char*	base = av[1];
+
+	int		result = ft_atoi_base( string, base );
+	if ( !result )
+		printf( "errno = %d\nInput is not valid\n", errno );
+	else
+		printf( "Input is valid\n" );
+
+	/*printf( "The given string is" PURPLE "[%s]" RESET "\n"\
+			"The return of ft_atoi_base is" CYAN " [%d]" RESET "\n",
+			string, result );*/
+
+}
+
+
 int	main( int ac, char** av ) {
 
 	if ( ac < 3 ) {
@@ -224,6 +248,8 @@ int	main( int ac, char** av ) {
 		test_read( ac-2, av+2 );
 	else if ( strcmp( av[1], "ft_strdup" ) == 0 )
 		test_strdup( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_atoi_base" ) == 0 )
+		test_atoi_base( ac-2, av+2 );
 	else
 		printf( "Invalid function\n" );
 
