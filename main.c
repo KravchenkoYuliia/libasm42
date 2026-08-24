@@ -169,6 +169,7 @@ void	test_read( int ac, char** av ) {
 	ssize_t		result_of_read = ft_read( fd, buffer, count );
 	if ( result_of_read < 0 ) {
 		free( buffer );
+		printf( "errno = %d\n", errno );
 		fatal_error( "Can't read from this fd, error occured\n" );
 	}
 	printf( CYAN "[%zd]" RESET " bytes were read by" CYAN " ft_read" RESET "\n"\
