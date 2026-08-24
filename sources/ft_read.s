@@ -15,9 +15,7 @@ ft_read:
 	neg		rax
 	push	rax
 
-	sub		rsp, 8
 	call	__errno_location
-	add		rsp, 8
 
 	pop		rcx
 	mov		[rax], ecx

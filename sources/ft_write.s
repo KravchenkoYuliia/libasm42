@@ -23,9 +23,7 @@ ft_write:
 	neg		rax								; in case of error rax has a negative number, need to make it positive to set it as an errno
 	push	rax								; put the value to the top of the stack RSP
 
-	sub		rsp, 8							; push has moved the stack, need to make the padding before call
 	call	__errno_location 				; return the address of the current's thread errno variable
-	add		rsp, 8
 
 	pop		rcx
 	mov		[rax], ecx
