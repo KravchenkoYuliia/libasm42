@@ -91,6 +91,12 @@ rax 0 = read
 rax 1 = write
 rax 60 = exit
 
+### RSP
+
+Stack Pointer Register
+points to the top of the stack
+
+
 ### XOR
 
 xor -> or
@@ -132,6 +138,14 @@ movsx -> move and sign extend
 ### Stack
 "The Stack" is a frequently-used area of memory designed for functions to use as temporary storage.  This is normally where you store values while calling another function: you can't store values in the scratch registers, because the function could change them.   
 
+## syscall fail 
+
+	errno is a thread-local global variable
+	errno errors can have code from `-1` to `-4095`
+
+
 ### links
 https://www.felixcloutier.com/x86/jcc
 https://www.tutorialspoint.com/assembly_programming/index.htm
+[Convert signed to unsigned number 64bits](https://www.simonv.fr/TypesConvert/?integers)
+[linux syscall](https://chromium.googlesource.com/linux-syscall-support/%2B/refs/heads/master/linux_syscall_support.h?utm_source=chatgpt.com)

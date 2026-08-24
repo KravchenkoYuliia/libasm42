@@ -133,8 +133,10 @@ void	test_write( int ac, char** av ) {
 
 	printf( UNDERLINE GREEN "Calling ft_write" RESET "\n\n" );
 	ssize_t		result_of_write = ft_write( fd, buffer, count );
-	if ( result_of_write < 0 )
+	if ( result_of_write < 0 ) {
+		printf( "errno = %d\n", errno );
 		fatal_error( "Can't write in this fd, error occured\n" );
+	}
 
 	printf( "\n" CYAN "%zd" RESET " bytes were written\n", result_of_write );
 
