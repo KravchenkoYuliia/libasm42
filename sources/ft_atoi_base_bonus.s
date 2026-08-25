@@ -30,69 +30,98 @@ ft_atoi_base:
 	ret
 
 .error:
-	call	__errno_location
-	mov		[rax], EINVAL
-	mov		rax, 0
+	;call	__errno_location
+	;mov		[rax], EINVAL
+	;mov		rax, 0
 	ret
 
 
 ; CHECKER IF ARGS ARE VALID ----------------------------------------------------------------------------
 
 check_string_is_valid:
-.check_if_NULL:
-	test	rdi, rdi				; test if string is not NULL
-	jz		arg_is_not_valid
+	.check_if_NULL:
+		test	rdi, rdi				; test if string is not NULL
+		jz		arg_is_not_valid
 
-.string_is_valid:
-	mov		rax, 1
-	ret
+	.string_is_valid:
+		mov		rax, 1
+		ret
 
 
 check_base_is_valid:
-.check_if_NULL:
-	test	rsi, rsi
-	jz		arg_is_not_valid
+	.check_if_NULL:
+		test	rsi, rsi
+		jz		arg_is_not_valid
 
-.check_if_not_enough_chars:
-	push	rdi						; string is at the top of the stack, base is in rsi
-	mov		rdi, rsi
-	call	ft_strlen
-	cmp		rax, 1
-	pop		rdi
-	jbe		arg_is_not_valid
+	.check_if_not_enough_chars:
+		push	rdi						; string is at the top of the stack, base is in rsi
+		mov		rdi, rsi
+		call	ft_strlen
+		cmp		rax, 1
+		pop		rdi
+		jbe		arg_is_not_valid
 
-.check_if_chars_not_allowed:
-	push	rdi						; string is at the stack, base is in rsi	1 time action before loop
-	mov		rdi, rsi				; string is at the stack, base is in rdi	1 time action before loop
-	xor		ecx, ecx				; initialize to 0, ecx is 32 bits from rcx
+	.check_if_chars_not_allowed:
+		push	rdi						; string is at the stack, base is in rsi	1 time action before loop
+		mov		rdi, rsi				; string is at the stack, base is in rdi	1 time action before loop
+		xor		ecx, ecx				; initialize to 0, ecx is 32 bits from rcx
 
-	.loop:
-		movzx	esi, BYTE [forbidden_chars_for_base + ecx]	; put one byte to rsi
-														; (esi is 32 bits from rsi, because strchr has int as 
-														; second parameter)
-		test	esi, esi
-		jz		.end_loop
+		.loop_check_not_allowed:
+			movzx	esi, BYTE [forbidden_chars_for_base + ecx]	; put one byte to rsi
+															; (esi is 32 bits from rsi, because strchr has int as 
+															; second parameter)
+			test	esi, esi
+			jz		.check_duplicates
 
-		call	strchr
-		test	rax, rax
-		jnz		.base_error_char_not_allowed
-		inc		rcx
-		jmp		.loop
-	.end_loop:
-		mov		rsi, rdi				; string is at the stack, base is back to rsi
-		pop		rdi						; string is back to rdi, base is in rsi
+			call	strchr
+			test	rax, rax
+			jnz		.error_char_not_allowed
+			inc		rcx
+			jmp		.loop_check_not_allowed
+		;.end_loop:
+		;	mov		rsi, rdi				; string is at the stack, base is back to rsi
+		;	pop		rdi						; string is back to rdi, base is in rsi
 
-.check_duplicates:
+	.check_duplicates:
+		push	rdi							; save base to the stack
+		xor		rcx, rcx
+		.loop_duplicates:
+			movzx		esi, BYTE [rdi + rcx]	; take current char from rdi
+			test		esi, esi
+			jz			.no_duplicates_found	; base is finished
 
+			lea		rdx, [rdi + rcx + 1]
 
-.base_is_valid:
-	mov		rax, 1
-	ret
+			push	rcx
+			push	rdi
+			mov		rdi, rdx
+			call	strchr
+			pop 	rdi
+			pop		rcx
 
-.base_error_char_not_allowed:
-	pop		rdi
-	mov		rax, 0
-	ret
+			test	rax, rax
+			jnz		.error_duplicate_found					; duplicate found
+			inc		rcx
+			jmp		.loop_duplicates
+
+		.no_duplicates_found:
+			pop		rsi
+			pop		rdi
+	
+	.base_is_valid:
+		mov		rax, 1
+		ret
+
+	.error_char_not_allowed:
+		pop		rdi
+		mov		rax, 0
+		ret
+
+	.error_duplicate_found:
+		pop		rsi
+		pop		rdi
+		mov		rax, 0
+		ret
 
 
 arg_is_not_valid:

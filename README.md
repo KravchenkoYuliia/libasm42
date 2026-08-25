@@ -152,8 +152,8 @@ movsx -> move and sign extend
 
 ### links
 [Intel manual](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
-[]
 [Jump types](https://www.felixcloutier.com/x86/jcc)
 [tutorial point](https://www.tutorialspoint.com/assembly_programming/index.htm)
 [Convert signed to unsigned number 64bits](https://www.simonv.fr/TypesConvert/?integers)
 [linux syscall](https://chromium.googlesource.com/linux-syscall-support/%2B/refs/heads/master/linux_syscall_support.h)
+[Purpose of lea](https://ratfactor.com/cards/lea)
