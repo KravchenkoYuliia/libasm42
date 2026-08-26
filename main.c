@@ -215,11 +215,7 @@ void	test_atoi_base( int ac, char** av ) {
 	char*	base = av[1];
 
 	int		result = ft_atoi_base( string, base );
-	if ( !result )
-		printf( "errno = %d\nInput is not valid\n", errno );
-	else
-		printf( "Input is valid\n" );
-
+	printf( "result is [%d]\n", result );
 	/*printf( "The given string is" PURPLE "[%s]" RESET "\n"\
 			"The return of ft_atoi_base is" CYAN " [%d]" RESET "\n",
 			string, result );*/
