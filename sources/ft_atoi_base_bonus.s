@@ -11,6 +11,8 @@ extern		strchr
 extern		__errno_location
 EINVAL 		equ 22
 
+
+
 ; MAIN FUNCTION -----------------------------------------------------------------------------------------
 	
 	; rdi = string
@@ -30,9 +32,9 @@ ft_atoi_base:
 	ret
 
 .error:
-	;call	__errno_location
-	;mov		[rax], EINVAL
-	;mov		rax, 0
+	call	__errno_location
+	mov		[rax], EINVAL
+	mov		rax, 0
 	ret
 
 
@@ -63,7 +65,11 @@ get_int_from_string:
 		je		.sign_is_minus
 
 	xor		r8, r8
+	push	r11
 	.loop:
+		push	rdx
+		push	rdi
+
 		movzx	r9, BYTE [rdi + rcx]	; current byte from RDI is in r9
 		test	r9, r9
 		jz		.done
@@ -72,29 +78,47 @@ get_int_from_string:
 		mov		rsi, r9			
 		call	strchr					; call strchr( base, current_char_from_string )
 										; return RAX with address of found char or NULL
+		mov		rsi, rdi
 		test	rax, rax
 		jz		.done
 
 		sub		rax, rdi				; rax - base -> position of current byte
-		;mov		r10, rax				; r10 has current number
+		pop		rdi
+		mov		r10, rax				; r10 has current number
 
+		mov		rax, r8
+		imul	rdx
+		pop		rdx
+		add		rax, r10
+		mov		r8, rax
+		
+		inc		rcx
+
+		jmp		.loop
 		;r8(result) = r8(prev result) * rdx(base length) + r10(last number that we found in base)
 
-
 	.done:
-		;mov		rax, r8
+		pop		rdi
+		pop		rdx
+		pop		r11
+
+		mov		rax, r8
+		imul	r11
 		ret
 
 	.sign_is_plus:
-		mov		r11, 1					; R11 has sing of the number
+		mov		r11, 1					; R11 has sign of the number
+		push	r11
 		inc		rcx
+		xor		r8, r8
 		jmp		.loop
 
 	.sign_is_minus:
 		mov		r11, -1
+		push	r11
 		inc		rcx
+		xor		r8, r8
 		jmp		.loop
-
 
 
 
@@ -191,6 +215,7 @@ arg_is_not_valid:
 	ret
 
 
+
 ; DATA SECTION ------------------------------------------------------------------------------------------
 ;  ------------------------------------------------------------------------------------------------------
 ;  ------------------------------------------------------------------------------------------------------
@@ -199,4 +224,4 @@ section		.data
 
 forbidden_chars_for_base:
 	db		'+', '-', 9, 10, 11, 12, 13, 32, 0
-	; 0 = '\0'  |  9-13 different tabs, new line  |  32 = space 
+	; 0 = '\0'  |  9-13 different tabs, new line  |  32 = space

@@ -24,13 +24,12 @@ ld -o program file.o
 nasm -f elf64 file.s -g -F dwarf
 ld file.o -o program
 gdb -tui ./program
-layout asm
-break _start
-run
 set args <function name> <args>
-focus asm
-si (to move to the next line in code)
-info register
+break <function name>
+run
+si (to move to the next line in code) or ni and enter
+info register to see the address of the registers
+p (char*) $rdi to see the content of the register
 
 ## Registers
 ```text
@@ -157,3 +156,4 @@ movsx -> move and sign extend
 [Convert signed to unsigned number 64bits](https://www.simonv.fr/TypesConvert/?integers)
 [linux syscall](https://chromium.googlesource.com/linux-syscall-support/%2B/refs/heads/master/linux_syscall_support.h)
 [Purpose of lea](https://ratfactor.com/cards/lea)
+[calculator with castom base](https://utilitiesbunker.com/tools/arbitrary-base-converter?utm_source=chatgpt.com)

@@ -215,10 +215,13 @@ void	test_atoi_base( int ac, char** av ) {
 	char*	base = av[1];
 
 	int		result = ft_atoi_base( string, base );
-	printf( "result is [%d]\n", result );
-	/*printf( "The given string is" PURPLE "[%s]" RESET "\n"\
+	if ( !result ) {
+		printf( "The result is 0. If your string is not 0 - there is an error in the arguments\n" );
+		return ;
+	}
+	printf( "The given string is" PURPLE " [%s]" RESET "\n"\
 			"The return of ft_atoi_base is" CYAN " [%d]" RESET "\n",
-			string, result );*/
+			string, result );
 
 }
 
