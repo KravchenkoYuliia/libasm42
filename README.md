@@ -156,4 +156,5 @@ movsx -> move and sign extend
 [Convert signed to unsigned number 64bits](https://www.simonv.fr/TypesConvert/?integers)
 [linux syscall](https://chromium.googlesource.com/linux-syscall-support/%2B/refs/heads/master/linux_syscall_support.h)
 [Purpose of lea](https://ratfactor.com/cards/lea)
-[calculator with castom base](https://utilitiesbunker.com/tools/arbitrary-base-converter?utm_source=chatgpt.com)
+[calculator with castom base](https://utilitiesbunker.com/tools/arbitrary-base-converter)
+[linked links](https://www.cs.uaf.edu/2015/fall/cs301/lecture/09_25_structs.html)

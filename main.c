@@ -216,12 +216,30 @@ void	test_atoi_base( int ac, char** av ) {
 
 	int		result = ft_atoi_base( string, base );
 	if ( !result ) {
-		printf( "The result is 0. If your string is not 0 - there is an error in the arguments\n" );
-		return ;
+		fatal_error( "The result is 0. If your string is not 0 - there is an error in the arguments\n" );
 	}
 	printf( "The given string is" PURPLE " [%s]" RESET "\n"\
 			"The return of ft_atoi_base is" CYAN " [%d]" RESET "\n",
 			string, result );
+
+}
+
+
+void	test_list_push_front( int ac, char** av ) {
+
+	(void)ac;
+	(void)av;
+	t_list*	list = calloc( 1, sizeof(t_list) );
+	if ( !list )
+		fatal_error( "Calloc failed for list\n" );
+
+	list->data = calloc( 12, sizeof( char ) );
+	if ( !list->data )
+		fatal_error( "Calloc failed for list->data\n" );
+
+	list->data = "middle list";
+	ft_list_push_front( &list, "first list" );
+	printf( "First list has data: [%s]\n", ( char* )list->data );
 
 }
 
@@ -249,6 +267,8 @@ int	main( int ac, char** av ) {
 		test_strdup( ac-2, av+2 );
 	else if ( strcmp( av[1], "ft_atoi_base" ) == 0 )
 		test_atoi_base( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_list_push_front" ) == 0 )
+		test_list_push_front( ac-2, av+2 );
 	else
 		printf( "Invalid function\n" );
 

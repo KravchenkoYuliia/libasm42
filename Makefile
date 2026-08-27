@@ -9,7 +9,7 @@ INC_DIR = includes
 OBJ_DIR = objects
 
 FILES = ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s
-BONUS_FILES = ft_atoi_base_bonus.s
+BONUS_FILES = ft_atoi_base_bonus.s ft_list_push_front_bonus.s
 TEST_FILE = main.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
