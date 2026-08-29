@@ -158,3 +158,13 @@ movsx -> move and sign extend
 [Purpose of lea](https://ratfactor.com/cards/lea)
 [calculator with castom base](https://utilitiesbunker.com/tools/arbitrary-base-converter)
 [linked links](https://www.cs.uaf.edu/2015/fall/cs301/lecture/09_25_structs.html)
+
+
+
+# TODO delete it
+
+set args ft_list_push_front f
+b ft_list_push_front
+r
+
+p (char*) $rsi

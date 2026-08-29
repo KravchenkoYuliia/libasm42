@@ -207,9 +207,11 @@ void	test_strdup( int ac, char** av ) {
 void	test_atoi_base( int ac, char** av ) {
 
 	if ( ac != 2 )
-		fatal_error( "./program ft_ string\n" );
+		fatal_error( "./program ft_atoi_base string base\n" );
 	if ( !av || !av[0] || !av[1] )
 		fatal_error( "String or base is NULL\n" );
+
+	printf( UNDERLINE GREEN "Calling ft_atoi_base" RESET "\n\n" );
 
 	char*	string = av[0];
 	char*	base = av[1];
@@ -225,21 +227,77 @@ void	test_atoi_base( int ac, char** av ) {
 }
 
 
+t_list*		create_node( char* data ) {
+
+	t_list*		node = calloc( 1, sizeof( t_list ) );
+	if ( !node )
+		return NULL;
+
+	node->data = calloc( ft_strlen( data ) + 1, sizeof( char ) );
+	if ( !node->data ) {
+		free( node );
+		return NULL;
+	}
+	strcpy( node->data, data );
+	node->next = NULL;
+
+	return node;
+}
+
+
+void	print_list( t_list *list ) {
+
+	int	i = 1;
+	while ( list )
+	{
+		printf( "Node[%d] has data: %s\n", i, ( char* )( list->data ));
+		list = list->next;
+		i++;
+	}
+}
+
+
 void	test_list_push_front( int ac, char** av ) {
 
-	(void)ac;
-	(void)av;
-	t_list*	list = calloc( 1, sizeof(t_list) );
-	if ( !list )
-		fatal_error( "Calloc failed for list\n" );
+	if ( ac != 1 )
+		fatal_error( "./program ft_list_push_front data\n" );
+	if ( !av || !av[0] )
+		fatal_error( "Data is NULL\n" );
+	
+	t_list*		list;
+	//
+	//Create first node
+	//
 
-	list->data = calloc( 12, sizeof( char ) );
-	if ( !list->data )
-		fatal_error( "Calloc failed for list->data\n" );
+	t_list*		first_node = create_node( "middle node" );
+	if ( !first_node )
+		fatal_error( "Calloc failed for first node of the list\n" );
+	list = first_node;
 
-	list->data = "middle list";
-	ft_list_push_front( &list, "first list" );
-	printf( "First list has data: [%s]\n", ( char* )list->data );
+	//
+	//Create second node
+	//
+
+	t_list*		second_node = create_node( "last node" );
+	if ( !second_node )
+		fatal_error( "Calloc failed for second node of the list\n" );
+	first_node->next = second_node;
+
+	second_node->next = NULL;
+	
+	printf( UNDERLINE PURPLE "List before:" RESET "\n" );
+	print_list( list );
+	printf( "\n" );
+
+	printf( UNDERLINE GREEN "Calling ft_list_push_front" RESET "\n" );
+	ft_list_push_front( &list, av[0] );
+	print_list( list );
+
+	free( second_node->data );
+	free( second_node );
+	free( first_node->data );
+	free( first_node );
+	free( list );
 
 }
 
