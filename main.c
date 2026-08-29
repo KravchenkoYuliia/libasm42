@@ -93,6 +93,7 @@ int		int_is_valid( const char *str, int *result )
 
 }
 
+
 int		size_t_is_valid( const char *str, size_t *result )
 {
 	char				*end;
@@ -109,6 +110,7 @@ int		size_t_is_valid( const char *str, size_t *result )
 	return 1;
 
 }
+
 
 void	test_write( int ac, char** av ) {
 
@@ -180,6 +182,7 @@ void	test_read( int ac, char** av ) {
 
 }
 
+
 void	test_strdup( int ac, char** av ) {
 
 	if ( ac != 1 )
@@ -233,19 +236,14 @@ t_list*		create_node( char* data ) {
 	if ( !node )
 		return NULL;
 
-	node->data = calloc( ft_strlen( data ) + 1, sizeof( char ) );
-	if ( !node->data ) {
-		free( node );
-		return NULL;
-	}
-	strcpy( node->data, data );
+	node->data = ft_strdup( data );
 	node->next = NULL;
 
 	return node;
 }
 
 
-void	print_list( t_list *list ) {
+void	print_list_string( t_list *list ) {
 
 	int	i = 1;
 	while ( list )
@@ -283,15 +281,13 @@ void	test_list_push_front( int ac, char** av ) {
 		fatal_error( "Calloc failed for second node of the list\n" );
 	first_node->next = second_node;
 
-	second_node->next = NULL;
-	
 	printf( UNDERLINE PURPLE "List before:" RESET "\n" );
-	print_list( list );
+	print_list_string( list );
 	printf( "\n" );
 
 	printf( UNDERLINE GREEN "Calling ft_list_push_front" RESET "\n" );
 	ft_list_push_front( &list, av[0] );
-	print_list( list );
+	print_list_string( list );
 
 	free( second_node->data );
 	free( second_node );
@@ -302,9 +298,62 @@ void	test_list_push_front( int ac, char** av ) {
 }
 
 
+void	free_list( t_list* list ) {
+
+	while ( list )
+	{
+	    t_list	*next_node = list->next;
+
+		if ( list->data )
+	    	free( list->data );
+	    free( list );
+
+	    list = next_node;
+	}
+
+}
+
+
+void	print_list_int( t_list *list ) {
+
+	int	i = 1;
+	while ( list )
+	{
+		printf( "Node[%d] has data: %d\n", i, (*( int* )( list->data )) );
+		list = list->next;
+		i++;
+	}
+}
+
+
+void	test_list_size() {
+
+	int		i = 1;
+	t_list*		list = create_node( ( void* )&i );
+
+	t_list*		prev_node = list;
+	for ( size_t i = 2; i < 10; i++ ) {
+		t_list*		node = create_node( ( void* )&i );
+		if ( !node )
+			fatal_error( "Calloc failed to create node\n" );
+		prev_node->next = node;
+		node->next = NULL;
+		prev_node = node;
+	}
+
+	print_list_int( list );
+	printf( "\n" );
+
+	unsigned int	result = ft_list_size( list );
+	printf( "List has" CYAN " [%d]" RESET " nodes\n", result );
+	free_list( list );
+
+}
+
+
 int	main( int ac, char** av ) {
 
-	if ( ac < 3 ) {
+	if ( ac < 2 ) {
 		write( STDERR_FILENO, "./program FUNCTION ARGUMENT(S)\n", strlen( "./program FUNCTION ARGUMENT(S)\n" ) );
 		return 1;
 	}
@@ -327,6 +376,8 @@ int	main( int ac, char** av ) {
 		test_atoi_base( ac-2, av+2 );
 	else if ( strcmp( av[1], "ft_list_push_front" ) == 0 )
 		test_list_push_front( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_list_size" ) == 0 )
+		test_list_size();
 	else
 		printf( "Invalid function\n" );
 
