@@ -248,10 +248,11 @@ void	print_list_with_data_string( t_list *list ) {
 	int	i = 1;
 	while ( list )
 	{
-		printf( "Node[%d] has data: %s\n", i, ( char* )( list->data ));
+		printf( "Node[%d] has data: %s\n", i, ( char* )( list->data ) );
 		list = list->next;
 		i++;
 	}
+
 }
 
 
@@ -349,13 +350,54 @@ void	test_list_size( int ac, char** av ) {
 }
 
 
+t_list*		create_list_for_ft_list_sort() {
+
+	t_list*		first_node =  create_node_with_data_string( "9" );
+
+	t_list*		second_node = create_node_with_data_string( "8" );
+	first_node->next = second_node;
+
+	t_list*		third_node =  create_node_with_data_string( "1" );
+	second_node->next = third_node;
+
+	t_list*		fourth_node = create_node_with_data_string( "2" );
+	third_node->next = fourth_node;
+
+	t_list*		fifth_node =  create_node_with_data_string( "7" );
+	fourth_node->next = fifth_node;
+
+	return first_node;
+
+}
+
+
+void	test_list_sort() {
+
+	t_list*		list = create_list_for_ft_list_sort();
+	print_list_with_data_string( list );
+
+	printf( UNDERLINE GREEN "Calling ft_list_sort" RESET "\n\n" );
+	int	result = ft_list_sort( &list, ft_strcmp );
+	if ( result )
+		printf( "First 2 nodes are sorted\n" );
+	else if ( !result )
+		printf( "First 2 nodes are not sorted\n" );
+
+
+	//print_list_with_data_string( list );
+
+	free_list( list );
+
+}
+
+
 int	main( int ac, char** av ) {
 
-	if ( ac < 3 ) {
+	if ( ac < 2 ) {
 		write( STDERR_FILENO, "./program FUNCTION ARGUMENT(S)\n", strlen( "./program FUNCTION ARGUMENT(S)\n" ) );
 		return 1;
 	}
-	if ( !av[0] || !av[1] || !av[2] )
+	if ( !av[0] || !av[1] )
 		fatal_error( "At least one arg is NULL\n" );
 
 	if ( strcmp( av[1], "ft_strlen" ) == 0 )
@@ -376,6 +418,8 @@ int	main( int ac, char** av ) {
 		test_list_push_front( ac-2, av+2 );
 	else if ( strcmp( av[1], "ft_list_size" ) == 0 )
 		test_list_size( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_list_sort" ) == 0 )
+		test_list_sort();
 	else
 		printf( "Invalid function\n" );
 

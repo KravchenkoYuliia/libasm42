@@ -13,5 +13,6 @@ typedef	struct	s_list {
 int				ft_atoi_base( char *str, char *base );
 void			ft_list_push_front( t_list **begin_list, void *data );
 unsigned int	ft_list_size( t_list *begin_list );
+int			ft_list_sort( t_list **begin_list, int (*cmp)( const char*, const char* ) );
 
 #endif
