@@ -377,7 +377,7 @@ void	test_list_sort() {
 	print_list_with_data_string( list );
 
 	printf( UNDERLINE GREEN "Calling ft_list_sort" RESET "\n\n" );
-	ft_list_sort( &list, ft_strcmp );
+	ft_list_sort( &list, ( int (*)() )ft_strcmp );
 	print_list_with_data_string( list );
 
 	free_list( list );

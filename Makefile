@@ -19,7 +19,7 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.s=.o))
 BONUS_OBJ = $(addprefix $(OBJ_DIR)/, $(BONUS_FILES:.s=.o))
 
 AFLAGS = -f elf64 -o
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -Wno-cast-function-type
 DEBUG_FLAGS = -g -F dwarf
 
 $(LIBRARY): $(OBJ_DIR) $(OBJ)
