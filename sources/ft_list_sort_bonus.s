@@ -29,7 +29,7 @@ ft_list_sort:
 		;mov		rsi, r11
 		xor		r8, r8					; r8 = prev node, NULL if current node is first node
 
-	;.loop:
+	.loop:
 		;mov		r8, [rdi]		; left node's data
 		mov		rdx, rdi		; left node's address
 		
@@ -52,9 +52,7 @@ ft_list_sort:
 		pop		rdx
 		pop		rdi
 		mov		r8, rdx
-		.temp_end:
-			ret
-		;jmp		.loop
+		jmp		.loop
 
 	.swap_nodes:
 		pop		rdx		
@@ -64,13 +62,14 @@ ft_list_sort:
 		mov		[rdx + 8], rcx				; left node's next point to temp node
 		test	r8, r8
 		jz		.change_head_of_list
+
+		mov		[r8 + 8], rdi
 		jmp		.check_if_sorted
+		
 		.change_head_of_list:
 			mov		[r10], rdi
+			jmp		.check_if_sorted
 		
-		.temp_end_1:
-			ret
-
 
 
 
