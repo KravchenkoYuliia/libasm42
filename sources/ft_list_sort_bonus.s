@@ -1,12 +1,21 @@
 section		.text
 global		ft_list_sort
-extern		ft_strcmp
+extern		ft_strcmp  ;TODO remove it and check
+extern		__errno_location
+
+EINVAL equ 22					; 22 errno code = invalid argument
 
 ; rdi = t_list **begin_list ---> save it in r10
 ; rsi = int (*cmp)( const char*, const char* ) ---> save it in r11
 
 
 ft_list_sort:
+
+	test	rdi, rdi
+	jz		.error_in_args
+
+	test	rsi, rsi
+	jz		.error_in_args
 
 	mov		r10, rdi							; save initial parameters in r10, r11 to reuse rdi, rsi
 	mov		r11, rsi
@@ -66,6 +75,10 @@ ft_list_sort:
 				mov		[r10], rdi
 				jmp		.check_if_sorted
 
+	.error_in_args:
+		call	__errno_location
+		mov		[rax], EINVAL
+		ret
 
 
 ; CHECK IF LIST IS SORTED -----------------------------------------------------------------------------------------

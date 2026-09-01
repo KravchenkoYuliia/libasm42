@@ -369,7 +369,7 @@ t_list*		create_list_for_ft_list_sort() {
 	return first_node;
 
 }
-//TODO to test if list is NULL or 1 node
+
 
 void	test_list_sort() {
 
@@ -378,7 +378,6 @@ void	test_list_sort() {
 
 	printf( UNDERLINE GREEN "Calling ft_list_sort" RESET "\n\n" );
 	ft_list_sort( &list, ft_strcmp );
-
 	print_list_with_data_string( list );
 
 	free_list( list );
