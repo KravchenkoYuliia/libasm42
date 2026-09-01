@@ -360,10 +360,10 @@ t_list*		create_list_for_ft_list_sort() {
 	t_list*		third_node =  create_node_with_data_string( "1" );
 	second_node->next = third_node;
 
-	t_list*		fourth_node = create_node_with_data_string( "2" );
+	t_list*		fourth_node = create_node_with_data_string( "3" );
 	third_node->next = fourth_node;
 
-	t_list*		fifth_node =  create_node_with_data_string( "7" );
+	t_list*		fifth_node =  create_node_with_data_string( "9" );
 	fourth_node->next = fifth_node;
 
 	return first_node;
@@ -379,9 +379,9 @@ void	test_list_sort() {
 	printf( UNDERLINE GREEN "Calling ft_list_sort" RESET "\n\n" );
 	int	result = ft_list_sort( &list, ft_strcmp );
 	if ( result )
-		printf( "First 2 nodes are sorted\n" );
+		printf( "List is sorted\n" );
 	else if ( !result )
-		printf( "First 2 nodes are not sorted\n" );
+		printf( "List is not sorted\n" );
 
 
 	//print_list_with_data_string( list );

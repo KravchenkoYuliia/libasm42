@@ -2,19 +2,20 @@ section		.text
 global		ft_list_sort
 extern		ft_strcmp
 
-; rdi = t_list **begin_list
-; rsi = int (*cmp)( const char*, const char* )
+; rdi = t_list **begin_list ---> save it in r10
+; rsi = int (*cmp)( const char*, const char* ) ---> save it in r11
 
 
 ft_list_sort:
 
-	;push	rsi
-	;push	rdi
+	mov		r10, rdi
+	mov		r11, rsi
 
+	mov		rdi, [rdi]
 	call	check_if_list_sorted
 	test	rax, rax
 	jz		.sort
-		
+
 	.done
 		mov		rax, 1
 		ret
@@ -28,11 +29,15 @@ ft_list_sort:
 	;	if list is NULL ---> .check_if_list_sorted
 
 
-check_if_list_sorted:
-		mov		rdx, [rdi]		; put first node to rdx
-		mov		r8, [rdx]		; data from first node is in r8
 
-		mov		rdi, [rdx + 8]	; put second node to rdi
+; CHECK IF LIST IS SORTED -----------------------------------------------------------------------------------------
+
+check_if_list_sorted:
+	
+	.loop:
+		mov		r8, [rdi]		; data from first node is in r8
+
+		mov		rdi, [rdi + 8]	; put second node to rdi
 		test	rdi, rdi
 		jz		.sorted
 		
@@ -47,12 +52,13 @@ check_if_list_sorted:
 		ja		.not_sorted
 
 		pop		rdi
+		jmp		.loop
 
-		.sorted:
-			mov		rax, 1
-			ret
+	.sorted:
+		mov		rax, 1
+		ret
 
-		.not_sorted:
-			pop		rdi
-			mov		rax, 0
-			ret
+	.not_sorted:
+		pop		rdi
+		mov		rax, 0
+		ret
