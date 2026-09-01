@@ -352,18 +352,18 @@ void	test_list_size( int ac, char** av ) {
 
 t_list*		create_list_for_ft_list_sort() {
 
-	t_list*		first_node =  create_node_with_data_string( "9" );
+	t_list*		first_node =  create_node_with_data_string( "1" );
 
-	t_list*		second_node = create_node_with_data_string( "8" );
+	t_list*		second_node = create_node_with_data_string( "2" );
 	first_node->next = second_node;
 
-	t_list*		third_node =  create_node_with_data_string( "1" );
+	t_list*		third_node =  create_node_with_data_string( "3" );
 	second_node->next = third_node;
 
-	t_list*		fourth_node = create_node_with_data_string( "3" );
+	t_list*		fourth_node = create_node_with_data_string( "9" );
 	third_node->next = fourth_node;
 
-	t_list*		fifth_node =  create_node_with_data_string( "9" );
+	t_list*		fifth_node =  create_node_with_data_string( "1" );
 	fourth_node->next = fifth_node;
 
 	return first_node;
@@ -377,14 +377,9 @@ void	test_list_sort() {
 	print_list_with_data_string( list );
 
 	printf( UNDERLINE GREEN "Calling ft_list_sort" RESET "\n\n" );
-	int	result = ft_list_sort( &list, ft_strcmp );
-	if ( result )
-		printf( "List is sorted\n" );
-	else if ( !result )
-		printf( "List is not sorted\n" );
+	ft_list_sort( &list, ft_strcmp );
 
-
-	//print_list_with_data_string( list );
+	print_list_with_data_string( list );
 
 	free_list( list );
 
