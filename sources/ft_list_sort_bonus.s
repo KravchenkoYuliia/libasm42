@@ -1,6 +1,5 @@
 section		.text
 global		ft_list_sort
-extern		ft_strcmp  ;TODO remove it and check
 extern		__errno_location
 
 EINVAL equ 22					; 22 errno code = invalid argument
