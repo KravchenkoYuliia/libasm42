@@ -352,12 +352,12 @@ void	test_list_size( int ac, char** av ) {
 
 t_list*		create_list_for_ft_list_sort() {
 
-	t_list*		first_node =  create_node_with_data_string( "9" );
+	t_list*		first_node =  create_node_with_data_string( "0" );
 
 	t_list*		second_node = create_node_with_data_string( "6" );
 	first_node->next = second_node;
 
-	t_list*		third_node =  create_node_with_data_string( "7" );
+	t_list*		third_node =  create_node_with_data_string( "1" );
 	second_node->next = third_node;
 
 	t_list*		fourth_node = create_node_with_data_string( "8" );
@@ -369,7 +369,7 @@ t_list*		create_list_for_ft_list_sort() {
 	return first_node;
 
 }
-
+//TODO to test if list is NULL or 1 node
 
 void	test_list_sort() {
 
