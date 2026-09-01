@@ -385,6 +385,13 @@ void	test_list_sort() {
 }
 
 
+void	test_list_remove_if() {
+
+	printf( "Coming...\n" );
+
+}
+
+
 int	main( int ac, char** av ) {
 
 	if ( ac < 2 ) {
@@ -414,6 +421,8 @@ int	main( int ac, char** av ) {
 		test_list_size( ac-2, av+2 );
 	else if ( strcmp( av[1], "ft_list_sort" ) == 0 )
 		test_list_sort();
+	else if ( strcmp( av[1], "ft_list_remove_if" ) == 0 )
+		test_list_remove_if();
 	else
 		printf( "Invalid function\n" );
 
