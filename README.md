@@ -163,8 +163,8 @@ movsx -> move and sign extend
 
 # TODO delete it
 
-set args ft_list_push_front f
-b ft_list_push_front
+set args ft_list_remove_if f
+b ft_list_remove_if
 r
 
 p (char*) $rsi

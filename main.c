@@ -248,7 +248,11 @@ void	print_list_with_data_string( t_list *list ) {
 	int	i = 1;
 	while ( list )
 	{
-		printf( "Node[%d] has data: %s\n", i, ( char* )( list->data ) );
+		printf( "Node[%d] has data:", i );
+		if ( list->data )
+			printf( " %s\n", ( char* )( list->data ) );
+		else
+			printf( "\n" );
 		list = list->next;
 		i++;
 	}
@@ -385,9 +389,45 @@ void	test_list_sort() {
 }
 
 
+t_list*		create_list_for_ft_list_remove_if() {
+
+	t_list*		first_node =  create_node_with_data_string( "remove_hello" );
+
+	t_list*		second_node = create_node_with_data_string( "valid" );
+	first_node->next = second_node;
+
+	t_list*		third_node =  create_node_with_data_string( "valid" );
+	second_node->next = third_node;
+
+	t_list*		fourth_node = create_node_with_data_string( "remove_hello" );
+	third_node->next = fourth_node;
+
+	t_list*		fifth_node =  create_node_with_data_string( "valid" );
+	fourth_node->next = fifth_node;
+
+	return first_node;
+
+}
+
+
+void	free_fct( void*	data ) {
+
+	if ( data )
+		free( data );
+
+}
+
 void	test_list_remove_if() {
 
-	printf( "Coming...\n" );
+	t_list*		list = create_list_for_ft_list_remove_if();
+	print_list_with_data_string( list );
+
+	char*	data_ref = "remove_hello";
+	printf( UNDERLINE GREEN "Calling ft_list_remove_if" RESET "\n\n" );
+	ft_list_remove_if( &list, ( void* )data_ref, ( int (*)() )ft_strcmp,  free_fct );
+
+	print_list_with_data_string( list );
+	//free_list( list );
 
 }
 
