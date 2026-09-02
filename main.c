@@ -245,6 +245,8 @@ t_list*		create_node_with_data_string( char* data ) {
 
 void	print_list_with_data_string( t_list *list ) {
 
+	if ( !list )
+		printf( "0 nodes\n" );
 	int	i = 1;
 	while ( list )
 	{
@@ -393,13 +395,13 @@ t_list*		create_list_for_ft_list_remove_if() {
 
 	t_list*		first_node =  create_node_with_data_string( "remove_hello" );
 
-	t_list*		second_node = create_node_with_data_string( "valid" );
+	t_list*		second_node = create_node_with_data_string( "remove_hello" );
 	first_node->next = second_node;
 
 	t_list*		third_node =  create_node_with_data_string( "valid" );
 	second_node->next = third_node;
 
-	t_list*		fourth_node = create_node_with_data_string( "remove_hello" );
+	t_list*		fourth_node = create_node_with_data_string( "valid" );
 	third_node->next = fourth_node;
 
 	t_list*		fifth_node =  create_node_with_data_string( "valid" );
