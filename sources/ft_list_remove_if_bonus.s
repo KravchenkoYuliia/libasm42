@@ -1,6 +1,9 @@
 section		.text
 extern		ft_list_remove_if
+extern		__errno_location
 extern		free
+
+EINVAL equ 22					; 22 errno code = invalid argument
 
 ; rdi = t_list** begin_list
 ; rsi = void* data_ref
@@ -10,10 +13,16 @@ extern		free
 
 ft_list_remove_if:
 
+	test	rdi, rdi
+	jz		.error_in_args
+
 	mov		r11, rdi					; store the address of list
 	push	r11
 
 	mov		rdi, [rdi]					; rdi has first node address
+	test	rdi, rdi
+	jz		.error_in_args
+
 	xor		r8, r8						; r8 = prev
 	
 	.loop:
@@ -101,3 +110,8 @@ ft_list_remove_if:
 		push	r11
 		
 		jmp		.delete_current_node
+
+	.error_in_args:
+		call	__errno_location
+		mov		[rax], EINVAL
+		ret

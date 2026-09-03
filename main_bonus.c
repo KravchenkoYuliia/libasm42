@@ -7,6 +7,7 @@
 #include <limits.h>
 #include <errno.h>
 #include "includes/libasm.h"
+#include "includes/libasm_bonus.h"
 
 #define UNDERLINE "\033[4m"
 #define GREEN "\033[1;92m"
@@ -202,8 +203,234 @@ void	test_strdup( int ac, char** av ) {
 			CYAN "Duplicated" RESET " string is %s" CYAN " [%p]" RESET "\n",\
 			init_string, &init_string,\
 			duplicate_string, &duplicate_string );
+
+}
+
+
+void	test_atoi_base( int ac, char** av ) {
+
+	if ( ac != 2 )
+		fatal_error( "./program ft_atoi_base string base\n" );
+	if ( !av || !av[0] || !av[1] )
+		fatal_error( "String or base is NULL\n" );
+
+	printf( UNDERLINE GREEN "Calling ft_atoi_base" RESET "\n\n" );
+
+	char*	string = av[0];
+	char*	base = av[1];
+
+	int		result = ft_atoi_base( string, base );
+	if ( !result ) {
+		fatal_error( "The result is 0. If your string is not 0 - there is an error in the arguments\n" );
+	}
+	printf( "The given string is" PURPLE " [%s]" RESET "\n"\
+			"The return of ft_atoi_base is" CYAN " [%d]" RESET "\n",
+			string, result );
+
+}
+
+
+t_list*		create_node_with_data_string( char* data ) {
+
+	t_list*		node = calloc( 1, sizeof( t_list ) );
+	if ( !node )
+		return NULL;
+
+	node->data = ft_strdup( data );
+	node->next = NULL;
+
+	return node;
+}
+
+
+void	print_list_with_data_string( t_list *list ) {
+
+	if ( !list )
+		printf( "0 nodes\n" );
+	int	i = 1;
+	while ( list )
+	{
+		printf( "Node[%d] has data:", i );
+		if ( list->data )
+			printf( " %s\n", ( char* )( list->data ) );
+		else
+			printf( "\n" );
+		list = list->next;
+		i++;
+	}
+
+}
+
+
+void	test_list_push_front( int ac, char** av ) {
+
+	if ( ac != 1 )
+		fatal_error( "./program ft_list_push_front data\n" );
+	if ( !av || !av[0] )
+		fatal_error( "Data is NULL\n" );
 	
-	free( duplicate_string );
+	t_list*		list;
+	//
+	//Create first node
+	//
+
+	t_list*		first_node = create_node_with_data_string( "middle node" );
+	if ( !first_node )
+		fatal_error( "Calloc failed for first node of the list\n" );
+	list = first_node;
+
+	//
+	//Create second node
+	//
+
+	t_list*		second_node = create_node_with_data_string( "last node" );
+	if ( !second_node )
+		fatal_error( "Calloc failed for second node of the list\n" );
+	first_node->next = second_node;
+
+	printf( UNDERLINE PURPLE "List before:" RESET "\n" );
+	print_list_with_data_string( list );
+	printf( "\n" );
+
+	printf( UNDERLINE GREEN "Calling ft_list_push_front" RESET "\n" );
+	ft_list_push_front( &list, av[0] );
+	print_list_with_data_string( list );
+
+	free( second_node->data );
+	free( second_node );
+	free( first_node->data );
+	free( first_node );
+	free( list );
+
+}
+
+
+void	free_list( t_list* list ) {
+
+	while ( list )
+	{
+	    t_list	*next_node = list->next;
+
+		if ( list->data )
+	    	free( list->data );
+	    free( list );
+
+	    list = next_node;
+	}
+
+}
+
+
+void	test_list_size( int ac, char** av ) {
+
+	if ( ac != 1 )
+		fatal_error( "./program ft_list_size nb_of_nodes\n" );
+	if ( !av || !av[0] )
+		fatal_error( "Nb of nodes is missing\n" );
+
+	printf( UNDERLINE GREEN "Calling ft_list_size" RESET "\n\n" );
+
+	int		nb_of_nodes = atoi( av[0] );
+	if ( nb_of_nodes < 1 )
+		fatal_error( "Give at least 1 node\n" );
+
+	t_list*		list = create_node_with_data_string( "content" );
+
+	t_list*		prev_node = list;
+	for ( unsigned int i = 1; i <= ( unsigned int )nb_of_nodes; i++ ) {
+		t_list*		node = create_node_with_data_string( "content" );
+		if ( !node )
+			fatal_error( "Calloc failed to create node\n" );
+		prev_node->next = node;
+		node->next = NULL;
+		prev_node = node;
+	}
+
+	print_list_with_data_string( list );
+	printf( "\n" );
+
+	unsigned int	result = ft_list_size( list );
+	printf( "List has" CYAN " [%d]" RESET " nodes\n", result );
+	free_list( list );
+
+}
+
+
+t_list*		create_list_for_ft_list_sort() {
+
+	t_list*		first_node =  create_node_with_data_string( "0" );
+
+	t_list*		second_node = create_node_with_data_string( "6" );
+	first_node->next = second_node;
+
+	t_list*		third_node =  create_node_with_data_string( "1" );
+	second_node->next = third_node;
+
+	t_list*		fourth_node = create_node_with_data_string( "8" );
+	third_node->next = fourth_node;
+
+	t_list*		fifth_node =  create_node_with_data_string( "1" );
+	fourth_node->next = fifth_node;
+
+	return first_node;
+
+}
+
+
+void	test_list_sort() {
+
+	t_list*		list = create_list_for_ft_list_sort();
+	print_list_with_data_string( list );
+
+	printf( UNDERLINE GREEN "Calling ft_list_sort" RESET "\n\n" );
+	ft_list_sort( &list, ( int (*)() )ft_strcmp );
+	print_list_with_data_string( list );
+
+	free_list( list );
+
+}
+
+
+t_list*		create_list_for_ft_list_remove_if() {
+
+	t_list*		first_node =  create_node_with_data_string( "remove_hello" );
+
+	t_list*		second_node = create_node_with_data_string( "remove_hello" );
+	first_node->next = second_node;
+
+	t_list*		third_node =  create_node_with_data_string( "valid" );
+	second_node->next = third_node;
+
+	t_list*		fourth_node = create_node_with_data_string( "valid" );
+	third_node->next = fourth_node;
+
+	t_list*		fifth_node =  create_node_with_data_string( "valid" );
+	fourth_node->next = fifth_node;
+
+	return first_node;
+
+}
+
+
+void	free_fct( void*	data ) {
+
+	if ( data )
+		free( data );
+
+}
+
+void	test_list_remove_if() {
+
+	t_list*		list = create_list_for_ft_list_remove_if();
+	print_list_with_data_string( list );
+
+	char*	data_ref = "remove_hello";
+	printf( UNDERLINE GREEN "Calling ft_list_remove_if" RESET "\n\n" );
+	if ( list )
+		ft_list_remove_if( &list, ( void* )data_ref, ( int (*)() )ft_strcmp,  free_fct );
+
+	print_list_with_data_string( list );
+	free_list( list );
 
 }
 
@@ -229,6 +456,16 @@ int	main( int ac, char** av ) {
 		test_read( ac-2, av+2 );
 	else if ( strcmp( av[1], "ft_strdup" ) == 0 )
 		test_strdup( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_atoi_base" ) == 0 )
+		test_atoi_base( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_list_push_front" ) == 0 )
+		test_list_push_front( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_list_size" ) == 0 )
+		test_list_size( ac-2, av+2 );
+	else if ( strcmp( av[1], "ft_list_sort" ) == 0 )
+		test_list_sort();
+	else if ( strcmp( av[1], "ft_list_remove_if" ) == 0 )
+		test_list_remove_if();
 	else
 		printf( "Invalid function\n" );
 

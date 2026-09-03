@@ -1,7 +1,7 @@
 #
 
 
-## Intex Syntax
+## Intel Syntax
 instruction   dest,source
 
 example:

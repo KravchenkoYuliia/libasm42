@@ -1,5 +1,8 @@
+.DEFAULT_GOAL := all
+
 LIBRARY = libasm.a
 PROGRAM = program
+PROGRAM_BONUS = program_bonus
 
 PURPLE = \033[1;95m
 RESET = \033[0m
@@ -11,6 +14,7 @@ OBJ_DIR = objects
 FILES = ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s
 BONUS_FILES = ft_atoi_base_bonus.s ft_list_push_front_bonus.s ft_list_size_bonus.s ft_list_sort_bonus.s ft_list_remove_if_bonus.s
 TEST_FILE = main.c
+TEST_BONUS_FILE = main_bonus.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 BONUS_SRC = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
@@ -27,7 +31,7 @@ $(LIBRARY): $(OBJ_DIR) $(OBJ)
 	@printf "$(PURPLE)-----------------Created an Assembly library------------------$(RESET)\n"
 	
 $(PROGRAM): $(LIBRARY) $(TEST_FILE)
-	gcc $(CFLAGS) -o program $(TEST_FILE) $(LIBRARY)
+	gcc $(CFLAGS) -o $(PROGRAM) $(TEST_FILE) $(LIBRARY)
 	@printf "$(PURPLE)----------Compiled main.c and linked it with library----------$(RESET)\n"
 
 
@@ -39,8 +43,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s | $(OBJ_DIR)
 #nasm $(AFLAGS) $@ $<
 
 all: $(LIBRARY) $(PROGRAM)
-bonus: $(BONUS_OBJ) $(LIBRARY)
+bonus: $(PROGRAM_BONUS)
+
+$(PROGRAM_BONUS): $(BONUS_OBJ) $(LIBRARY) $(TEST_BONUS_FILE)
 	ar rcs $(LIBRARY) $(BONUS_OBJ)
+	gcc $(CFLAGS) -o $(PROGRAM_BONUS) $(TEST_BONUS_FILE) $(LIBRARY)
 	@printf "$(PURPLE)-----------------Added bonus files to Assembly library------------------$(RESET)\n"
 	$(MAKE) $(PROGRAM)
 
@@ -49,6 +56,7 @@ clean:
 fclean: clean
 	rm -f $(LIBRARY)
 	rm $(PROGRAM)
+	rm $(PROGRAM_BONUS)
 
 re: fclean all
 

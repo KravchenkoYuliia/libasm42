@@ -1,12 +1,16 @@
 section		.text
 global		ft_list_push_front
 extern		malloc
+extern		__errno_location
 
 ; rdi = t_list** list
 ; rsi = void* data
 ; Quadword = 8 bytes
 
 ft_list_push_front:
+	test	rdi, rdi
+	jz		.error_in_args
+
 	push	rdi						; address of the head list is on the stack (**list)
 	push	rsi						; data that we need to put to first node is on the stack 
 									; because malloc call will modify it
@@ -33,3 +37,7 @@ ft_list_push_front:
 		pop		rsi
 		pop		rdi
 		ret
+
+	.error_in_args:
+	call	__errno_location
+	ret
